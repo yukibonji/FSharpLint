@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MSBuild-Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A lint tool for F#.">
+    <meta name="author" content="Matthew Mcveigh">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/content/style.css" />
+    <script type="text/javascript" src="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+        </ul>
+        <h3 class="muted"><a href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/index.html">FSharpLint</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h4>Including The Task In Your Project's Project File</h4>
+
+<p>The task must be declared with the <code>UsingTask</code> element as follows:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="o">&lt;</span><span class="i">UsingTask</span> <span class="i">AssemblyFile</span><span class="o">=</span><span class="s">&quot;</span><span class="s">C</span><span class="s">:</span><span class="s">\</span><span class="s">FSharpLint</span><span class="s">\b</span><span class="s">in</span><span class="s">\</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">MSBuildIntegration</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span> <span class="i">TaskName</span><span class="o">=</span><span class="s">&quot;</span><span class="s">FSharpLintTask</span><span class="s">&quot;</span> <span class="o">/&gt;</span></pre>
+</td>
+</tr>
+</table>
+
+<p>The <code>AssemblyFile</code> property must be the path to the <code>FSharpLint.MSBuildIntegration.dll</code> assembly, this file should have been placed into the <code>/src/FSharpLint.MSBuildIntegration/bin/Release/</code> directory when building the tool.</p>
+
+<p>The task has a required property <code>Project</code> which must be a path to the project file, use <code>$(MSBuildProjectFullPath)</code> for this since it's a reference to the current file which is what we want:</p>
+
+<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+
+<p>The task has an optional property <code>TreatWarningsAsErrors</code> which will fail the build if there are any lint errors by displaying them as build errors:</p>
+
+<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="o">TreatWarningsAsErrors</span><span class="k">="true"</span> <span class="k">/&gt;</span>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+
+<p>The following should be in your <code>.fsproj</code> file, with the <code>AssemblyFile</code> path ammended:</p>
+
+<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">UsingTask</span> <span class="o">AssemblyFile</span><span class="k">="C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll"</span> <span class="o">TaskName</span><span class="k">="FSharpLintTask"</span> <span class="k">/&gt;</span>
+<span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+
+<h4>Example In Use</h4>
+
+<p><img src="http://i.imgur.com/D4c9g1m.png" alt="Example of MSBuild task in use" /></p>
+
+
+        </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">
+              FSharpLint
+            </li>
+
+            <li class="divider"></li>
+
+            <li><a href="http://github.com/duckmatt/FSharpLint">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/LICENSE">License (GPLv3)</a></li>
+            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/index.html">Introduction</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="Console-Application.html">Using the command line tool.</a></li>
+            <li><a href="MSBuild-Task.html">Using the MSBuild task.</a></li>
+
+            <li class="nav-header">Analysers</li>
+
+            <li>FSharpLint.Hints</li>
+            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
+            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
+            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
+            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
+            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
+            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
+            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
+            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
+            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/duckmatt/FSharpLint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

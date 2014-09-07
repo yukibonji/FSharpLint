@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hints</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A lint tool for F#.">
+    <meta name="author" content="Matthew Mcveigh">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/content/style.css" />
+    <script type="text/javascript" src="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+        </ul>
+        <h3 class="muted"><a href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/index.html">FSharpLint</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<p>Hints are rules that allow an expression to be matched and also suggest a refactor into a simpler expression. For example the expression <code>not ((x * y) = z)</code> could be refactored into a simpler <code>(x * y) &lt;&gt; z</code>.</p>
+
+<h4>A quick walk through of the structure of a hint</h4>
+
+<p>Let's say we have a file named <code>TestHints.fs</code> and inside this file on line 4 is the following code:</p>
+
+<p><code>not ((x * y) = z) |&gt; ignore</code></p>
+
+<p>The example we use here will be to write a hint that'll suggest the user to refactor the above into the equivalent:</p>
+
+<p><code>(x * y) &lt;&gt; z |&gt; ignore</code></p>
+
+<p>A hint is split by <code>===&gt;</code> into two parts, the first part being the pattern of the expression to match, the second part being the suggested pattern that any code matching the first part should be refactored to:</p>
+
+<p><code>match expression ===&gt; suggest expression</code></p>
+
+<p>To write an expression "pattern" we can make use of the following: variables, wildcards, identifiers, literal constants, infix operators, prefix operators.</p>
+
+<p>Here we want to match: function application of <code>not</code> with an expression that is the <code>=</code> operator applied to any two expressions. The hint can be seen below:</p>
+
+<p><code>not (a = b) ===&gt; a &lt;&gt; b</code></p>
+
+<p>In the hint above, <code>a</code> and <code>b</code> are variables; variables are single letter identifiers - variables match <em>any</em> expression. Wildcards <code>_</code> can also be used to match any expression, however using variables allows you to show the user how the expressions should be changed to refactor the code (if the expression is not wanted in the refactored code then that would be perfect used of a wildcard).</p>
+
+<p>Output of the lint tool:</p>
+
+<p><code>`
+not (a=b) can be refactored into a&lt;&gt;b
+Error in file ..\..\..\FSharpLint.FunctionalTest.TestedProject\TestHints.fs on line 6 starting at column 4 
+    not ((x * y) = z) |&gt; ignore
+    ^</code>`</p>
+
+<h4>Current limitations</h4>
+
+<p>Because of the use of <code>===&gt;</code> to split the rules into parts, a rule cannot be written to match this valid F# operator.</p>
+
+<p>Operators beginning with <code>.</code> e.g. <code>.*</code> will have incorrect precedence and as such should not currently be used in hints.</p>
+
+<p>Single letter identifiers are used as variables inside a hint, so attempting to match an identifier that is a single letter is not going to work.</p>
+
+<h4>Future ideas</h4>
+
+<p>Next concerns are matching if statements and method calls, and applying constraints to variables e.g. x must be a literal decimal constant.</p>
+
+
+        </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">
+              FSharpLint
+            </li>
+
+            <li class="divider"></li>
+
+            <li><a href="http://github.com/duckmatt/FSharpLint">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/LICENSE">License (GPLv3)</a></li>
+            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="file://C:\Users\Matt\Documents\GitHub\FSharpLint\docs\tools\../output/index.html">Introduction</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="Console-Application.html">Using the command line tool.</a></li>
+            <li><a href="MSBuild-Task.html">Using the MSBuild task.</a></li>
+
+            <li class="nav-header">Analysers</li>
+
+            <li>FSharpLint.Hints</li>
+            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
+            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
+            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
+            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
+            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
+            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
+            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
+            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
+            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/duckmatt/FSharpLint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
