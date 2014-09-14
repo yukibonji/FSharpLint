@@ -151,6 +151,12 @@ let x = List.fold (+) 0 [1;2;3]
 
 <p>On windows run <code>build.cmd</code> and on unix based systems run <code>build.sh</code>. These will build the framework and put the console application into the <code>/bin</code> directory (the application will be named <code>fsharplint.exe</code>), all the tests will be run - all of which should pass. The MSBuild task assembly will have been built to <code>/src/FSharpLint.MSBuildIntegration/bin/Release/FSharpLint.MSBuildIntegration.dll</code>.</p>
 
+<h5>Troubleshooting a failing build</h5>
+
+<p>On windows you may find yourself getting an error loading <code>FSharp.Data.DesignTime.dll</code> (HRESULT: 0x80131515), the solution to this is to right click on <code>lib/FSharp.Data.DesignTime.dll</code> in explorer, go to properties, and then click unblock.</p>
+
+<p>Also on windows if the tests in <code>FSharpLint.Rules.Tests</code> are all failing with a <code>ParseException</code>, then the solution most probably is to dump <code>FSharp.Core.optdata</code> and <code>FSharp.Core.sigdata</code> into <code>tests\FSharpLint.Rules.Tests\bin\Release</code> or <code>tests\FSharpLint.Rules.Tests\bin\Debug</code> depending upon your build target. This shouldn't be required, it seems to only happen on some builds on some computers. To get the <code>FSharp.Core.optdata</code> and <code>FSharp.Core.sigdata</code> you need to find where your FSharp.Core is located - the path will be something along the lines of <code>C:\Program Files\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0</code> (F# 3.0) or <code>C:\Program Files\Reference Assemblies\Microsoft\FSharp\.NETFramework\v4.0\4.3.1.0</code> (F# 3.1)</p>
+
 <h4>Running The Tool</h4>
 
 <p>The tool can be run from the command line, or as an MSBuild task.</p>

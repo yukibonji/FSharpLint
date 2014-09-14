@@ -35,23 +35,182 @@
           
 <h1>Hints</h1>
 
+<h3>Introduction</h3>
+
+<p>The Hints analyser is inspired by <a href="https://github.com/ndmitchell/hlint">HLint</a>. The hints let users easily write their own rules which are matched against linted code and when matched produce a suggestion that the user provides as part of the hint.</p>
+
+<p>Every hint is formed of two parts: the match and the suggestion. Both the match and the suggestion are parsed the same way into ASTs, but they have two different purposes; the match AST is analysed against the code being linted looking for any expressions in the code that match the AST, and if there is a match then the suggestion AST is used to display a suggestion on how the code can be refactored.</p>
+
+<h3>Matching</h3>
+
+<h5>Match Any Expression</h5>
+
+<p>todo: variable
+todo: wildcard</p>
+
+<h5>Match Identifier</h5>
+
+<p>todo: identifier</p>
+
+<h5>Match Literal Constants</h5>
+
+<p>todo: constants</p>
+
+<h5>Match Function Application and Operators</h5>
+
+<p>todo: function application
+todo: prefix operator
+todo: infix operator</p>
+
+<h5>Match Lambda Functions</h5>
+
+<p>todo: lambda</p>
+
+<h5>Order Of Operations</h5>
+
+<p>todo: parentheses</p>
+
+<h3>EBNF of a Hint</h3>
+
+<p>This is incomplete - currently missing a few of the more detailed rules e.g. <code>uint32</code> and <code>infix-operator</code>, for these I'd recommend looking them up in the EBNF for F# as that's what they will be based upon.</p>
+
+<table class="pre"><tr><td><pre lang="ebnf">whitespace = &quot; &quot; | &quot;\t&quot; | &quot;\n&quot; | &quot;\r\n&quot; | &quot;\r&quot;;
+
+spaces = [{whitespace}];
+
+spaces1 = whitespace, [{whitespace}];
+
+bool = &quot;true&quot; | &quot;false&quot;;
+
+unit = &quot;(&quot;, [spaces], &quot;)&quot;;
+
+constant = bool
+            | unit
+            | character
+            | literal-string
+            | verbatim-string
+            | byte-char
+            | byte-array
+            | verbatim-byte-array
+            | triple-quoted-string
+            | sbyte
+            | byte
+            | int16
+            | uint16
+            | uint32
+            | native-int
+            | unative-int
+            | int64
+            | uint64
+            | single
+            | big-num
+            | decimal
+            | double
+            | int32;
+
+parentheses = &quot;(&quot; expression &quot;)&quot;;
+
+wildcard = &quot;_&quot;;
+
+variable = letter, -letter;
+
+ident-start-char = &quot;_&quot; | letter;
+
+ident-char = letter | digit | &quot;&#39;&quot; | &quot;_&quot; ;
+
+ident-text = ident-start-char, {ident-char};
+
+ident = ident-text | (&quot;``&quot;, {(-(&quot;`&quot; | &quot;\n&quot; | &quot;\r&quot; | &quot;\t&quot;)) | ((&quot;`&quot;), -(&quot;`&quot; | &quot;\n&quot; | &quot;\r&quot; | &quot;\t&quot;))}, &quot;``&quot;);
+
+ident-or-op = ident | (&quot;(&quot;, spaces, operator, spaces, &quot;)&quot;);
+
+long-ident = {ident, &quot;.&quot;} | ident;
+
+long-ident-or-op = ident, {&quot;.&quot;, ident}, [&quot;.&quot;, ident-or-op]
+                    | ident-or-op
+                    | long-ident;
+
+application = constant
+                | variable
+                | wildcard
+                | long-ident-or-op
+                | parentheses;
+
+function-application = long-ident-or-op, identifier, spaces, {application, spaces}, [application, spaces];
+
+prefix-expr = prefix-operator, spaces, expression
+
+infix-expr = expression, spaces, infix-operator, spaces, expression
+
+identifier = long-ident-or-op -letter;
+
+argument-variable = letter;
+
+argument-wildcard = &quot;_&quot;;
+
+lambda-arguments = [{(argument-variable | argument-wildcard), spaces1}], 
+                        (argument-variable | argument-wildcard), [spaces]
+
+lambda = &quot;fun&quot;, spaces1, lambda-arguments, &quot;-&gt;&quot;, spaces, expression;
+
+expression = spaces, (constant | lambda | variable | wildcard | function-application
+                      | identifier | parentheses | infix-expr | prefix-expr), spaces;
+
+suggestion = expression;
+
+match = expression;
+
+hint = match, spaces, &quot;===&gt;&quot;, spaces, suggestion;</pre></td></tr></table>
+
+<h3>Writing Your Own Hints</h3>
+
+<p>Currently to provide your own hints you have to overwrite the default hints with your own using the <code>Hints</code>property inside of the <code>Hints</code> rule.</p>
+
+<p>For example to make the lint tool run with just the two hints: <code>not (a =  b) ===&gt; a &lt;&gt; b</code> and <code>not (a &lt;&gt; b) ===&gt; a =  b</code>, you could use the following config file to override existing hints:</p>
+
+<table class="pre"><tr><td><pre lang="xml"><span class="prep">&lt;?</span>xml version=<span class="s">"1.0"</span> encoding=<span class="s">"utf-8"</span><span class="prep">?&gt;</span>
+<span class="k">&lt;</span><span class="i">FSharpLintSettings</span><span class="k">&gt;</span>
+  <span class="k">&lt;</span><span class="i">Analysers</span><span class="k">&gt;</span>
+    <span class="k">&lt;</span><span class="i">Analyser</span> <span class="o">AnalyserId</span><span class="k">="FSharpLint.Hints"</span><span class="k">&gt;</span>
+      <span class="k">&lt;</span><span class="i">Rules</span><span class="k">&gt;</span>
+        <span class="k">&lt;</span><span class="i">Rule</span> <span class="o">Name</span><span class="k">="Hints"</span><span class="k">&gt;</span>
+          <span class="k">&lt;</span><span class="i">RuleSettings</span><span class="k">&gt;</span>
+            <span class="k">&lt;</span><span class="i">Property</span> <span class="o">name</span><span class="k">="Hints"</span><span class="k">&gt;</span>
+              <span class="k">&lt;!</span>[CDATA[
+                not (a =  b) ===<span class="k">&gt;</span> a <span class="k">&lt;&gt;</span> b
+                not (a <span class="k">&lt;&gt;</span> b) ===<span class="k">&gt;</span> a =  b
+              ]]<span class="k">&gt;</span>
+            <span class="k">&lt;/</span><span class="i">Property</span><span class="k">&gt;</span>
+          <span class="k">&lt;/</span><span class="i">RuleSettings</span><span class="k">&gt;</span>
+        <span class="k">&lt;/</span><span class="i">Rule</span><span class="k">&gt;</span>
+      <span class="k">&lt;/</span><span class="i">Rules</span><span class="k">&gt;</span>
+      <span class="k">&lt;</span><span class="i">AnalyserSettings</span><span class="k">&gt;</span>
+        <span class="k">&lt;</span><span class="i">Property</span> <span class="o">name</span><span class="k">="Enabled"</span><span class="k">&gt;</span>True<span class="k">&lt;/</span><span class="i">Property</span><span class="k">&gt;</span>
+      <span class="k">&lt;/</span><span class="i">AnalyserSettings</span><span class="k">&gt;</span>
+    <span class="k">&lt;/</span><span class="i">Analyser</span><span class="k">&gt;</span>
+  <span class="k">&lt;/</span><span class="i">Analysers</span><span class="k">&gt;</span>
+<span class="k">&lt;/</span><span class="i">FSharpLintSettings</span><span class="k">&gt;</span></pre></td></tr></table>
+
+<h3>Flaws</h3>
+
+<ul>
+<li><code>===&gt;</code> is used to split the hints into parts, a hint cannot match this valid F# operator.</li>
+<li>Single letter identifiers are used as variables inside a hint, so attempting to match an identifier that is a single letter is not going to work.</li>
+<li>Operators beginning with <code>.</code> e.g. <code>.*</code> will have incorrect precedence and as such should not currently be used in hints.</li>
+</ul>
+
+<h3>Future Intentions</h3>
+
+<ul>
+<li>Provide more informative parse errors.</li>
+<li>Allow for adding your own hints and removing select hints rather than always having to override the default with a set of hints.</li>
+<li>Provide support for matching literal lists, literal arrays, literal sequences, tuples, methods, if statements, and match statements</li>
+<li>Provide support for</li>
+</ul>
+
 <h3>Analyser Settings</h3>
 
-<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default false)</p>
-
-<h3>Rules</h3>
-
-<h4>Hints</h4>
-
-<h5>Cause</h5>
-
-<h5>Rationale</h5>
-
-<h5>How To Fix</h5>
-
-<h5>Rule Settings</h5>
-
-<p><code>Hints</code> -</p>
+<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default True)</p>
 
 
         </div>
