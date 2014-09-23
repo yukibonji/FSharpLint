@@ -34,7 +34,9 @@
           
 <h4>Using the Console Application</h4>
 
-<p>The console application is a very simple wrapper around the lint tool, as of now it has a single argument <code>-f</code> which is required to specify the path to the project file of the project that you want to run the tool against.</p>
+<p>The console application is a very simple wrapper around the lint tool, with a single required argument <code>-f</code> which is specifies the path to the project file of the project to run the tool against.</p>
+
+<p>If you get a <code>ParseException</code> reported when running the tool it's likely that your <code>FSharp.Core.dll</code> is in a non-standard directory - if this is not the case please report it as an issue. When it <em>is</em> in a non-standard directory you can use the <code>-core</code> argument to specify the directory where your <code>FSharp.Core.dll</code> is located.</p>
 
 <h5>Example</h5>
 
@@ -74,7 +76,12 @@
 <tr class="odd">
 <td><p><code>-f</code></p></td>
 <td align="left"><p>Specifies the path to the project file of the project to be linted. <strong>(Required)</strong></p></td>
-<td><p><code>fsharplint -f "C:\FSharpProjectDirectory\ProjectFile.fsproj"</code></p></td>
+<td><p><code>-f "C:\FSharpProjectDirectory\ProjectFile.fsproj"</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>-core</code></p></td>
+<td align="left"><p>Specifies the path to the directory containing <code>FSharp.Core.dll</code> to be used to parse the project, this directory must contain <code>FSharp.Core.sigdata</code> and <code>FSharp.Core.optdata</code> alongside <code>FSharp.Core.dll</code> <strong>(Optional)</strong></p></td>
+<td><p><code>-core "C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0"</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -83,7 +90,6 @@
 <h4>Future Improvements</h4>
 
 <ul>
-<li>Optional argument to the F# compiler directory needs to be added.</li>
 <li>Optional argument to a config file needs to be added.</li>
 </ul>
 
