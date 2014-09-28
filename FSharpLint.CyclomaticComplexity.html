@@ -52,9 +52,11 @@
 
 <h3>Analyser Settings</h3>
 
-<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)
-<code>MaxCyclomaticComplexity</code> - An integer property that specifies the max complexity of a function before issuing an error. (Default 10)
-<code>IncludeMatchStatements</code> - A boolean property that decides whether or not match statements are to be included as different flow paths, the reason why we have this is it's very easy to end up with a high cyclomatic complexity when matching against a large discriminated union. (Default true)</p>
+<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
+
+<p><code>MaxCyclomaticComplexity</code> - An integer property that specifies the max complexity of a function before issuing an error. (Default 10)</p>
+
+<p><code>IncludeMatchStatements</code> - A boolean property that decides whether or not match statements are to be included as different flow paths, the reason why we have this is it's very easy to end up with a high cyclomatic complexity when matching against a large discriminated union. (Default false)</p>
 
 
         </div>

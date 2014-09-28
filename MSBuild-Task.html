@@ -61,7 +61,7 @@
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="o">TreatWarningsAsErrors</span><span class="k">="true"</span> <span class="k">/&gt;</span>
 <span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
 
-<p>The task has another optional property <code>FSharpCoreDirectory</code> which allows you to specify the directory of where your <code>FSharp.Core.dll</code> is located. If it's you don't provide it the tool will attempt to find it from default locations - if it uses the wrong location you'll get a <code>ParseException</code> reported when running the tool:</p>
+<p>The task has another optional property <code>FSharpCoreDirectory</code> which allows you to specify the directory of where your <code>FSharp.Core.dll</code> is located. If you don't provide it the tool will attempt to find it from default locations - if it uses the wrong location you'll get a <code>ParseException</code> reported when running the tool:</p>
 
 <table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> 
