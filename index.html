@@ -186,7 +186,7 @@ let x = List.fold (+) 0 [1;2;3]
 
 <h4>Configuration Files</h4>
 
-<p>Configuration of the tool is done using xml with a purposely similar structure to <a href="http://stylecop.codeplex.com/">StyleCop</a>. Configuration files must be named: <code>Settings.FSharpLint</code>. A single xml file containing the default configuration for all rules is <a href="https://github.com/duckmatt/FSharpLint/blob/master/src/FSharpLint.Framework/DefaultConfiguration.FSharpLint">included inside of the software</a>.</p>
+<p>Configuration of the tool is done using xml with a purposely similar structure to <a href="http://stylecop.codeplex.com/">StyleCop</a>. Configuration files must be named: <code>Settings.FSharpLint</code>. A single xml file containing the default configuration for all rules is <a href="https://github.com/fsprojects/FSharpLint/blob/master/src/FSharpLint.Framework/DefaultConfiguration.FSharpLint">included inside of the software</a>.</p>
 
 <p>The configuration files are loaded in a specific order, files loaded after another will override the previous file. The default configuration is loaded first, from there the tool checks each directory from the root to up to the project being linted's directory. For example if the path of the project being linted was <code>C:\Files\SomeProjectBeingLinted</code>, then <code>C:\</code> would first be checked for a config file - if a config file is found then it would override the default config, then <code>C:\Files</code> would be checked - if a config file was found and a config file was also previously found in <code>C:\</code> then the config in <code>C:\Files</code> would override the one in <code>C:\</code> and so on.</p>
 
@@ -256,9 +256,9 @@ let x = List.fold (+) 0 [1;2;3]
 
             <li class="divider"></li>
 
-            <li><a href="http://github.com/duckmatt/FSharpLint">Source Code on GitHub</a></li>
-            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/LICENSE">License (GPLv3)</a></li>
-            <li><a href="http://github.com/duckmatt/FSharpLint/tree/master/RELEASE_NOTES.md">Release Notes</a></li>
+            <li><a href="http://github.com/fsprojects/FSharpLint">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsprojects/FSharpLint/tree/master/LICENSE">License (GPLv3)</a></li>
+            <li><a href="http://github.com/fsprojects/FSharpLint/tree/master/RELEASE_NOTES.md">Release Notes</a></li>
             
             <li class="nav-header">Documentation</li>
 
@@ -285,6 +285,6 @@ let x = List.fold (+) 0 [1;2;3]
         </div>
       </div>
     </div>
-    <a href="http://github.com/duckmatt/FSharpLint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <a href="http://github.com/fsprojects/FSharpLint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
   </body>
   </html>
