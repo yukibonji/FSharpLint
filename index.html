@@ -214,6 +214,74 @@ let x = List.fold (+) 0 [1;2;3]
     <span class="k">&lt;/</span><span class="i">Analysers</span><span class="k">&gt;</span>
 <span class="k">&lt;/</span><span class="i">FSharpLintSettings</span><span class="k">&gt;</span></pre></td></tr></table>
 
+<h4>Disabling rules and analysers within code</h4>
+
+<p>To disable a rule for a single section of code the <a href="http://msdn.microsoft.com/en-us/library/system.diagnostics.codeanalysis.suppressmessageattribute(v=vs.110).aspx">SuppressMessageAttribute</a> can be used. The attribute will not be included into the IL (as long as you don't have the <code>CODE_ANALYSIS</code> preprocessing symbol set).</p>
+
+<p>The attribute can be applied to let bindings, modules, types, and exceptions. Any lint warnings generated on or inside of what the attribute is applied to will be suppressed.</p>
+
+<p><em>Note: The attributes are currently unable to suppress the rules in the <code>FSharpLint.Typography</code> analyser.</em></p>
+
+<h5>Category and CheckId</h5>
+
+<p>Only two properties in the attribute need to be set to suppress a rule, these are: <code>Category</code> and <code>CheckId</code>. The attribute has a constructor which takes these two as the arguments, and they can also be set through property initialisation in the default constructor.</p>
+
+<p>Category is the name of the analyser containing the rule to be suppressed e.g. <code>FSharpLint.NameConventions</code>.</p>
+
+<p>CheckId is the name of the rule to be suppressed, or <code>*</code> to suppress all rules in the analyser e.g. <code>InterfaceNamesMustBeginWithI</code>.</p>
+
+<h5>Example</h5>
+
+<p>The following code breaks the rule <code>FSharpLint.NameConventions.InterfaceNamesMustBeginWithI</code>:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs15', 40)" onmouseover="showTip(event, 'fs15', 40)" class="i">Printable</span> <span class="o">=</span>
+    <span class="k">abstract</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs16', 41)" onmouseover="showTip(event, 'fs16', 41)" class="i">Print</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs3', 42)" onmouseover="showTip(event, 'fs3', 42)" class="i">unit</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs3', 43)" onmouseover="showTip(event, 'fs3', 43)" class="i">unit</span></pre>
+</td>
+</tr>
+</table>
+
+<p>It will result in the warning: <code>Interface identifiers should begin with the letter I found interface Printable</code>.</p>
+
+<p>We can disable this rule with: <code>[&lt;System.Diagnostics.CodeAnalysis.SuppressMessage("FSharpLint.NameConventions", "InterfaceNamesMustBeginWithI")&gt;]</code></p>
+
+<p>The following code has the <code>SuppressMessage</code> attribute applied to it, this code will generate no warning:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+[&lt;<span class="i">SuppressMessage</span>(<span class="s">&quot;</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">NameConventions</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">InterfaceNamesMustBeginWithI</span><span class="s">&quot;</span>)&gt;]
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs15', 44)" onmouseover="showTip(event, 'fs15', 44)" class="i">Printable</span> <span class="o">=</span>
+    <span class="k">abstract</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs16', 45)" onmouseover="showTip(event, 'fs16', 45)" class="i">Print</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs3', 46)" onmouseover="showTip(event, 'fs3', 46)" class="i">unit</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs3', 47)" onmouseover="showTip(event, 'fs3', 47)" class="i">unit</span></pre>
+</td>
+</tr>
+</table>
+
+<p>This could also be written using property initialisers as:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+[&lt;<span class="i">SuppressMessage</span>(<span class="i">Category</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">NameConventions</span><span class="s">&quot;</span>, <span class="i">CheckId</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">InterfaceNamesMustBeginWithI</span><span class="s">&quot;</span>)&gt;]
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs15', 48)" onmouseover="showTip(event, 'fs15', 48)" class="i">Printable</span> <span class="o">=</span>
+    <span class="k">abstract</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs16', 49)" onmouseover="showTip(event, 'fs16', 49)" class="i">Print</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs3', 50)" onmouseover="showTip(event, 'fs3', 50)" class="i">unit</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs3', 51)" onmouseover="showTip(event, 'fs3', 51)" class="i">unit</span></pre>
+</td>
+</tr>
+</table>
+
 <h4>Running Lint From An Application</h4>
 
 <p>The project <code>src/FSharpLint.Application</code> contains <code>RunLint.fs</code> that contains the following function:</p>
@@ -248,6 +316,8 @@ let x = List.fold (+) 0 [1;2;3]
 <div class="tip" id="fs12">type IExampleInterface =<br />&#160;&#160;interface<br />&#160;&#160;&#160;&#160;abstract member Print : unit -&gt; unit<br />&#160;&#160;end<br /><br />Full name: index.IExampleInterface</div>
 <div class="tip" id="fs13">abstract member IExampleInterface.Print : unit -&gt; unit<br /><br />Full name: index.IExampleInterface.Print</div>
 <div class="tip" id="fs14">val sum : list:&#39;T list -&gt; &#39;T (requires member ( + ) and member get_Zero)<br /><br />Full name: Microsoft.FSharp.Collections.List.sum</div>
+<div class="tip" id="fs15">type Printable =<br />&#160;&#160;interface<br />&#160;&#160;&#160;&#160;abstract member Print : unit -&gt; unit<br />&#160;&#160;end<br /><br />Full name: index.Printable</div>
+<div class="tip" id="fs16">abstract member Printable.Print : unit -&gt; unit<br /><br />Full name: index.Printable.Print</div>
 
         </div>
         <div class="span3">
