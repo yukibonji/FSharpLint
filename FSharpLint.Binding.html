@@ -98,6 +98,24 @@
 
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
+<h4>TupleOfWildcards</h4>
+
+<h5>Cause</h5>
+
+<p>A constructor in a pattern has arguments that consist entirely of wildcards e.g. <code>SynPat.Paren(_, _)</code></p>
+
+<h5>Rationale</h5>
+
+<p>The tuple of wildcards can be replaced with a single wildcard.</p>
+
+<h5>How To Fix</h5>
+
+<p>Replace the tuple with a single wildcard e.g. the example in the cause could be turned into <code>SynPat.Paren(_)</code></p>
+
+<h5>Rule Settings</h5>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
+
 
         </div>
         <div class="span3">
