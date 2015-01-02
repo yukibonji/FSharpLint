@@ -165,6 +165,7 @@ let x = List.fold (+) 0 [1;2;3]
 <ul>
 <li><a href="Console-Application.html">Using the command line tool</a>.</li>
 <li><a href="MSBuild-Task.html">Using the MSBuild task</a>.</li>
+<li><a href="FAKE-Task.html">Using the FAKE task</a>.</li>
 </ul>
 
 <h4>Analysers</h4>
@@ -219,8 +220,6 @@ let x = List.fold (+) 0 [1;2;3]
 <p>To disable a rule for a single section of code the <a href="http://msdn.microsoft.com/en-us/library/system.diagnostics.codeanalysis.suppressmessageattribute(v=vs.110).aspx">SuppressMessageAttribute</a> can be used. The attribute will not be included into the IL (as long as you don't have the <code>CODE_ANALYSIS</code> preprocessing symbol set).</p>
 
 <p>The attribute can be applied to let bindings, modules, types, and exceptions. Any lint warnings generated on or inside of what the attribute is applied to will be suppressed.</p>
-
-<p><em>Note: The attributes are currently unable to suppress the rules in the <code>FSharpLint.Typography</code> analyser.</em></p>
 
 <h5>Category and CheckId</h5>
 
@@ -345,6 +344,7 @@ let x = List.fold (+) 0 [1;2;3]
 
             <li><a href="Console-Application.html">Using the command line tool.</a></li>
             <li><a href="MSBuild-Task.html">Using the MSBuild task.</a></li>
+            <li><a href="FAKE-Task.html">Using the FAKE task.</a></li>
 
             <li class="nav-header">Analysers</li>
 
