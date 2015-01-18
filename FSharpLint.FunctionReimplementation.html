@@ -36,7 +36,15 @@
           
 <h1>FunctionReimplementation</h1>
 
-<p>Single rule that checks a lambda function does not act as an 'alias' for another function.</p>
+<p>Set of rules that highlight lambda functions that can removed through eta reduction.</p>
+
+<h3>Analyser Settings</h3>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default true)</p>
+
+<h3>Rules</h3>
+
+<h4>ReimplementsFunction</h4>
 
 <h5>Cause</h5>
 
@@ -47,7 +55,7 @@
 
 <h5>Rationale</h5>
 
-<p>The lambda functions are pointless.</p>
+<p>The lambda functions are redundant.</p>
 
 <h5>How To Fix</h5>
 
@@ -56,7 +64,30 @@
 <p><code>fun x y -&gt; x + y</code> is the same as <code>(+)</code>
 <code>fun x y -&gt; foo x y</code> is the same as <code>foo</code></p>
 
-<h3>Analyser Settings</h3>
+<h5>Rule Settings</h5>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
+
+<h4>CanBeReplacedWithComposition</h4>
+
+<h5>Cause</h5>
+
+<p>A lambda function applies a single argument to a chain of function calls, two examples below:</p>
+
+<p><code>fun x -&gt; not(isValid(x))</code>
+<code>fun x -&gt; x |&gt; isValid |&gt; not</code></p>
+
+<h5>Rationale</h5>
+
+<p>The lambda functions are redundant.</p>
+
+<h5>How To Fix</h5>
+
+<p>Replace the lambda with function composition:</p>
+
+<p><code>fun x -&gt; not(isValid(x))</code> and <code>fun x -&gt; x |&gt; isValid |&gt; not</code> are the same as <code>isValid &gt;&gt; not</code></p>
+
+<h5>Rule Settings</h5>
 
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
