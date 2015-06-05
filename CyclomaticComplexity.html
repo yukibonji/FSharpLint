@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Binding
+    <title>CyclomaticComplexity
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A lint tool for F#.">
@@ -34,87 +34,29 @@
       <div class="row">
         <div class="span9" id="main">
           
-<h1>Binding</h1>
+<h1>CyclomaticComplexity</h1>
 
-<p>Set of rules that analyse possible mistakes when binding values.</p>
+<p>Single rule that checks the <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity</a> of functions.</p>
+
+<h5>Cause</h5>
+
+<p>A function has more than a configurable number (<code>MaxCyclomaticComplexity</code>) of paths of flow control.</p>
+
+<h5>Rationale</h5>
+
+<p>A high cyclomatic complexity indicates that a function is difficult to understand.</p>
+
+<h5>How To Fix</h5>
+
+<p>Extract some paths of code from the function into other functions.</p>
 
 <h3>Analyser Settings</h3>
 
-<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default true)</p>
-
-<h3>Rules</h3>
-
-<h4>FavourIgnoreOverLetWild</h4>
-
-<h5>Cause</h5>
-
-<p>A value is binded to a wildcard e.g. <code>let _ = Console.ReadLine()</code></p>
-
-<h5>Rationale</h5>
-
-<p>Using the ignore function makes it clear what is intended to happen, rather than something that may be a mistake.</p>
-
-<h5>How To Fix</h5>
-
-<p>Pipe the value into the ignore function e.g. <code>Console.ReadLine() |&gt; ignore</code></p>
-
-<h5>Rule Settings</h5>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
-<h4>UselessBinding</h4>
+<p><code>MaxCyclomaticComplexity</code> - An integer property that specifies the max complexity of a function before issuing an error. (Default 10)</p>
 
-<h5>Cause</h5>
-
-<p>An identifier is binded to itself e.g. <code>let x = x</code></p>
-
-<h5>Rationale</h5>
-
-<p>Pointless statement likely to be an error.</p>
-
-<h5>How To Fix</h5>
-
-<p>Remove the binding.</p>
-
-<h5>Rule Settings</h5>
-
-<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
-
-<h4>WildcardNamedWithAsPattern</h4>
-
-<h5>Cause</h5>
-
-<p>A wildcard is given a name using the as pattern e.g. <code>match something with | _ as x -&gt; x + y</code></p>
-
-<h5>Rationale</h5>
-
-<p>The wildcard and as pattern can be replaced with the identifier the value is to be bound to.</p>
-
-<h5>How To Fix</h5>
-
-<p>Replace the wildcard with the identifier the wildcard is currently being bound to, e.g. change <code>match something with | _ as x -&gt; x + y</code> to <code>match something with | x -&gt; x + y</code></p>
-
-<h5>Rule Settings</h5>
-
-<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
-
-<h4>TupleOfWildcards</h4>
-
-<h5>Cause</h5>
-
-<p>A constructor in a pattern has arguments that consist entirely of wildcards e.g. <code>SynPat.Paren(_, _)</code></p>
-
-<h5>Rationale</h5>
-
-<p>The tuple of wildcards can be replaced with a single wildcard.</p>
-
-<h5>How To Fix</h5>
-
-<p>Replace the tuple with a single wildcard e.g. the example in the cause could be turned into <code>SynPat.Paren(_)</code></p>
-
-<h5>Rule Settings</h5>
-
-<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
+<p><code>IncludeMatchStatements</code> - A boolean property that decides whether or not match statements are to be included as different flow paths, the reason why we have this is it's very easy to end up with a high cyclomatic complexity when matching against a large discriminated union. (Default false)</p>
 
 
         </div>
@@ -147,17 +89,17 @@
 
             <li class="nav-header">Analysers</li>
 
-            <li><a href="FSharpLint.Hints.html">FSharpLint.Hints</a></li>
-            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
-            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
-            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
-            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
-            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
-            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
-            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
-            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
-            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
-            <li><a href="FSharpLint.RaiseWithTooManyArguments.html">FSharpLint.RaiseWithTooManyArguments</a></li>
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
           </ul>
         </div>
       </div>

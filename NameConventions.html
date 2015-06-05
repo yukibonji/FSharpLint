@@ -40,7 +40,7 @@
 
 <h3>Analyser Settings</h3>
 
-<p>N/A</p>
+<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default true)</p>
 
 <h3>Rules</h3>
 
@@ -255,9 +255,10 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">f</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">x</span> <span class="o">=</span> 
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="f">f</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">x</span> <span class="o">=</span> 
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">Woof</span> <span class="o">=</span> <span class="n">4</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">x</span>
-    <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">Woof</span></pre>
+    <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">Woof</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -281,9 +282,10 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">f</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">x</span> <span class="o">=</span> 
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="f">f</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">x</span> <span class="o">=</span> 
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="i">woof</span> <span class="o">=</span> <span class="n">4</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">x</span>
-    <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">woof</span></pre>
+    <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">woof</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -292,7 +294,7 @@
 
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule.</p>
 
-<div class="tip" id="fs1">val f : x:int -&gt; int<br /><br />Full name: FSharpLintNameConventions.f</div>
+<div class="tip" id="fs1">val f : x:int -&gt; int<br /><br />Full name: NameConventions.f</div>
 <div class="tip" id="fs2">val x : int</div>
 <div class="tip" id="fs3">val Woof : int</div>
 <div class="tip" id="fs4">val woof : int</div>
@@ -327,17 +329,17 @@
 
             <li class="nav-header">Analysers</li>
 
-            <li><a href="FSharpLint.Hints.html">FSharpLint.Hints</a></li>
-            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
-            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
-            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
-            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
-            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
-            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
-            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
-            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
-            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
-            <li><a href="FSharpLint.RaiseWithTooManyArguments.html">FSharpLint.RaiseWithTooManyArguments</a></li>
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
           </ul>
         </div>
       </div>

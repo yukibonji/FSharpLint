@@ -59,12 +59,13 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">@&quot;</span><span class="s">packages</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">.</span><span class="s">12</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">FAKE</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#r</span> <span class="s">@&quot;packages/FSharpLint.0.1.12/FSharpLint.FAKE.dll&quot;</span>
 <span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">FAKE</span>
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Lint</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;</span><span class="s">src</span><span class="s">/</span><span class="s">*</span><span class="s">*</span><span class="s">/</span><span class="s">*</span><span class="s">.</span><span class="s">fsproj</span><span class="s">&quot;</span>
-        <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">iter</span> (<span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">id</span>))</pre>
+<span class="i">Target</span> <span class="s">&quot;Lint&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">&quot;src/**/*.fsproj&quot;</span>
+        <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">iter</span> (<span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">id</span>))
+</pre>
 </td>
 </tr>
 </table>
@@ -80,11 +81,12 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">@&quot;</span><span class="s">packages</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">.</span><span class="s">12</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">FAKE</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#r</span> <span class="s">@&quot;packages/FSharpLint.0.1.12/FSharpLint.FAKE.dll&quot;</span>
 <span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">FAKE</span>
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Lint</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
-    <span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">id</span> <span class="s">&quot;</span><span class="s">src</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">Application</span><span class="s">/</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">Application</span><span class="s">.</span><span class="s">fsproj</span><span class="s">&quot;</span>)</pre>
+<span class="i">Target</span> <span class="s">&quot;Lint&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+    <span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">id</span> <span class="s">&quot;src/FSharpLint.Application/FSharpLint.Application.fsproj&quot;</span>)
+</pre>
 </td>
 </tr>
 </table>
@@ -98,7 +100,8 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">id</span> <span class="i">projectFile</span></pre>
+<span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">id</span> <span class="i">projectFile</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -110,7 +113,8 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">FSharpLint</span> (<span class="k">fun</span> <span class="i">options</span> <span class="k">-&gt;</span> { <span class="i">options</span> <span class="k">with</span> <span class="i">FSharpCoreDirectory</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">/</span><span class="s">somedirectory</span><span class="s">&quot;</span> }) <span class="i">projectFile</span></pre>
+<span class="i">FSharpLint</span> (<span class="k">fun</span> <span class="i">options</span> <span class="k">-&gt;</span> { <span class="i">options</span> <span class="k">with</span> <span class="i">FSharpCoreDirectory</span> <span class="o">=</span> <span class="s">&quot;/somedirectory&quot;</span> }) <span class="i">projectFile</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -149,17 +153,17 @@
 
             <li class="nav-header">Analysers</li>
 
-            <li><a href="FSharpLint.Hints.html">FSharpLint.Hints</a></li>
-            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
-            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
-            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
-            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
-            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
-            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
-            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
-            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
-            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
-            <li><a href="FSharpLint.RaiseWithTooManyArguments.html">FSharpLint.RaiseWithTooManyArguments</a></li>
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
           </ul>
         </div>
       </div>

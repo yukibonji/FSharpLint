@@ -42,7 +42,8 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="o">&lt;</span><span class="i">UsingTask</span> <span class="i">AssemblyFile</span><span class="o">=</span><span class="s">&quot;</span><span class="s">C</span><span class="s">:</span><span class="s">\</span><span class="s">FSharpLint</span><span class="s">\b</span><span class="s">in</span><span class="s">\</span><span class="s">FSharpLint</span><span class="s">.</span><span class="s">MSBuildIntegration</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span> <span class="i">TaskName</span><span class="o">=</span><span class="s">&quot;</span><span class="s">FSharpLintTask</span><span class="s">&quot;</span> <span class="o">/&gt;</span></pre>
+<span class="o">&lt;</span><span class="i">UsingTask</span> <span class="i">AssemblyFile</span><span class="o">=</span><span class="s">&quot;C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll&quot;</span> <span class="i">TaskName</span><span class="o">=</span><span class="s">&quot;FSharpLintTask&quot;</span> <span class="o">/&gt;</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -51,29 +52,59 @@
 
 <p>The task has a required property <code>Project</code> which must be a path to the project file, use <code>$(MSBuildProjectFullPath)</code> for this since it's a reference to the current file which is what we want:</p>
 
-<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
+</pre></td></tr></table>
 
 <p>The task has an optional property <code>TreatWarningsAsErrors</code> which will fail the build if there are any lint errors by displaying them as build errors:</p>
 
-<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="o">TreatWarningsAsErrors</span><span class="k">="true"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
+</pre></td></tr></table>
 
 <p>The task has another optional property <code>FSharpCoreDirectory</code> which allows you to specify the directory of where your <code>FSharp.Core.dll</code> is located. If you don't provide it the tool will attempt to find it from default locations - if it uses the wrong location you'll get a <code>ParseException</code> reported when running the tool:</p>
 
-<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> 
         <span class="o">FSharpCoreDirectory</span><span class="k">="C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
+</pre></td></tr></table>
 
 <p>The following should be in your <code>.fsproj</code> file, with the <code>AssemblyFile</code> path ammended:</p>
 
-<table class="pre"><tr><td><pre lang="xml"><span class="k">&lt;</span><span class="i">UsingTask</span> <span class="o">AssemblyFile</span><span class="k">="C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll"</span> <span class="o">TaskName</span><span class="k">="FSharpLintTask"</span> <span class="k">/&gt;</span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">UsingTask</span> <span class="o">AssemblyFile</span><span class="k">="C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll"</span> <span class="o">TaskName</span><span class="k">="FSharpLintTask"</span> <span class="k">/&gt;</span>
 <span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
     <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span></pre></td></tr></table>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
+</pre></td></tr></table>
 
 <h4>Example In Use</h4>
 
@@ -110,17 +141,17 @@
 
             <li class="nav-header">Analysers</li>
 
-            <li><a href="FSharpLint.Hints.html">FSharpLint.Hints</a></li>
-            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
-            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
-            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
-            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
-            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
-            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
-            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
-            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
-            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
-            <li><a href="FSharpLint.RaiseWithTooManyArguments.html">FSharpLint.RaiseWithTooManyArguments</a></li>
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
           </ul>
         </div>
       </div>

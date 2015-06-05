@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>CyclomaticComplexity
+    <title>FunctionReimplementation
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A lint tool for F#.">
@@ -34,29 +34,62 @@
       <div class="row">
         <div class="span9" id="main">
           
-<h1>CyclomaticComplexity</h1>
+<h1>FunctionReimplementation</h1>
 
-<p>Single rule that checks the <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity</a> of functions.</p>
-
-<h5>Cause</h5>
-
-<p>A function has more than a configurable number (<code>MaxCyclomaticComplexity</code>) of paths of flow control.</p>
-
-<h5>Rationale</h5>
-
-<p>A high cyclomatic complexity indicates that a function is difficult to understand.</p>
-
-<h5>How To Fix</h5>
-
-<p>Extract some paths of code from the function into other functions.</p>
+<p>Set of rules that highlight lambda functions that can removed through eta reduction.</p>
 
 <h3>Analyser Settings</h3>
 
+<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default true)</p>
+
+<h3>Rules</h3>
+
+<h4>ReimplementsFunction</h4>
+
+<h5>Cause</h5>
+
+<p>A lambda function does nothing other than call an existing function, two examples below:</p>
+
+<p><code>fun x y -&gt; x + y</code>
+<code>fun x y -&gt; foo x y</code></p>
+
+<h5>Rationale</h5>
+
+<p>The lambda functions are redundant.</p>
+
+<h5>How To Fix</h5>
+
+<p>Replace the lambda with the function that is being called.</p>
+
+<p><code>fun x y -&gt; x + y</code> is the same as <code>(+)</code>
+<code>fun x y -&gt; foo x y</code> is the same as <code>foo</code></p>
+
+<h5>Rule Settings</h5>
+
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
-<p><code>MaxCyclomaticComplexity</code> - An integer property that specifies the max complexity of a function before issuing an error. (Default 10)</p>
+<h4>CanBeReplacedWithComposition</h4>
 
-<p><code>IncludeMatchStatements</code> - A boolean property that decides whether or not match statements are to be included as different flow paths, the reason why we have this is it's very easy to end up with a high cyclomatic complexity when matching against a large discriminated union. (Default false)</p>
+<h5>Cause</h5>
+
+<p>A lambda function applies a single argument to a chain of function calls, two examples below:</p>
+
+<p><code>fun x -&gt; not(isValid(x))</code>
+<code>fun x -&gt; x |&gt; isValid |&gt; not</code></p>
+
+<h5>Rationale</h5>
+
+<p>The lambda functions are redundant.</p>
+
+<h5>How To Fix</h5>
+
+<p>Replace the lambda with function composition:</p>
+
+<p><code>fun x -&gt; not(isValid(x))</code> and <code>fun x -&gt; x |&gt; isValid |&gt; not</code> are the same as <code>isValid &gt;&gt; not</code></p>
+
+<h5>Rule Settings</h5>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
 
         </div>
@@ -89,17 +122,17 @@
 
             <li class="nav-header">Analysers</li>
 
-            <li><a href="FSharpLint.Hints.html">FSharpLint.Hints</a></li>
-            <li><a href="FSharpLint.NameConventions.html">FSharpLint.NameConventions</a></li>
-            <li><a href="FSharpLint.SourceLength.html">FSharpLint.SourceLength</a></li>
-            <li><a href="FSharpLint.Typography.html">FSharpLint.Typography</a></li>
-            <li><a href="FSharpLint.NestedStatements.html">FSharpLint.NestedStatements</a></li>
-            <li><a href="FSharpLint.NumberOfItems.html">FSharpLint.NumberOfItems</a></li>
-            <li><a href="FSharpLint.FunctionReimplementation.html">FSharpLint.FunctionReimplementation</a></li>
-            <li><a href="FSharpLint.XmlDocumentation.html">FSharpLint.XmlDocumentation</a></li>
-            <li><a href="FSharpLint.Binding.html">FSharpLint.Binding</a></li>
-            <li><a href="FSharpLint.CyclomaticComplexity.html">FSharpLint.CyclomaticComplexity</a></li>
-            <li><a href="FSharpLint.RaiseWithTooManyArguments.html">FSharpLint.RaiseWithTooManyArguments</a></li>
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
           </ul>
         </div>
       </div>

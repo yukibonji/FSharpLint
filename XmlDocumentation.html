@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>XmlDocumentation
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A lint tool for F#.">
+    <meta name="author" content="Matthew Mcveigh">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="content/style.css" />
+    <script type="text/javascript" src="content/tips.js"></script>
+	<script type="text/javascript">$(function() { $("#main table.pre").wrap("<div class='code-wrapper'></div>"); });</script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+        </ul>
+        <h3 class="muted"><a href="index.html">FSharpLint</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1>XmlDocumentation</h1>
+
+<p>Set of rules that analyse whether or not certain areas of code contain XML documentation.</p>
+
+<h3>Rationale</h3>
+
+<p>Provides users of your code more information through their IDE e.g. intellisense.</p>
+
+<h3>Analyser Settings</h3>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default false)</p>
+
+<h4>Each Rule Settings</h4>
+
+<p><code>Access</code> - A string property that defines when the rule is applied. (Default None)</p>
+
+<p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default false)</p>
+
+<p>Allowed <code>Access</code> values:
+<em> Public - only evaluate when the rule target is public
+</em> Internal - only evaluate when the rule target is internal
+<em> Private - only evaluate when the rule target is private
+</em> All - always evaluate the rule
+<em> NotPrivate - evaluate the rule when the rule target is Public or Internal
+</em> NotPublic - evaluate the rule when the rule target is Internal or Private
+* None - never evaluate the rule</p>
+
+<h3>Rules</h3>
+
+<h4>ModuleDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A module was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">module</span> <span class="i">XmlDocumentation</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the module definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">/// Rules to enforce the use of XML documentation in various places.</span>
+<span class="k">module</span> <span class="i">XmlDocumentation</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>ExceptionDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>An exception was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">exception</span> <span class="i">ParseException</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">string</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the exception definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">/// Failure during parsing, contains a failure message.</span>
+<span class="k">exception</span> <span class="i">ParseException</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">string</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>TypeDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A type was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">SimpleType</span> <span class="o">=</span>
+    <span class="k">member</span> <span class="i">this</span><span class="o">.</span><span class="i">Member</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the type definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">/// A simple type</span>
+<span class="k">type</span> <span class="i">SimpleType</span> <span class="o">=</span>
+    <span class="k">member</span> <span class="i">this</span><span class="o">.</span><span class="i">Member</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>MemberDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A member was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">IsAType</span> <span class="o">=</span>
+    <span class="k">member</span> <span class="i">this</span><span class="o">.</span><span class="i">Member</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the member definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">IsAType</span> <span class="o">=</span>
+    <span class="c">/// A simple member</span>
+    <span class="k">member</span> <span class="i">this</span><span class="o">.</span><span class="i">Member</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>EnumDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>An enum case was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">Colors</span> <span class="o">=</span>
+    | <span class="i">Red</span> <span class="o">=</span> <span class="n">0</span>
+    | <span class="i">Green</span> <span class="o">=</span> <span class="n">1</span>
+    | <span class="i">Blue</span> <span class="o">=</span> <span class="n">2</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the enum case definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">Colors</span> <span class="o">=</span>
+    <span class="c">/// This is red</span>
+    | <span class="i">Red</span> <span class="o">=</span> <span class="n">0</span>
+    <span class="c">/// This is green</span>
+    | <span class="i">Green</span> <span class="o">=</span> <span class="n">1</span>
+    <span class="c">/// This is blue</span>
+    | <span class="i">Blue</span> <span class="o">=</span> <span class="n">2</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>UnionDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A union case was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">Shape</span> <span class="o">=</span>
+    | <span class="i">Rectangle</span> <span class="k">of</span> <span class="i">width</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">float</span> <span class="o">*</span> <span class="i">length</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">float</span>
+    | <span class="i">Circle</span> <span class="k">of</span> <span class="i">radius</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="i">float</span>
+    | <span class="i">Shape</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the union case definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">Shape</span> <span class="o">=</span>
+    <span class="c">/// this is a Rectangle</span>
+    | <span class="i">Rectangle</span> <span class="k">of</span> <span class="i">width</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="i">float</span> <span class="o">*</span> <span class="i">length</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">float</span>
+    <span class="c">/// this is a Circle</span>
+    | <span class="i">Circle</span> <span class="k">of</span> <span class="i">radius</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="i">float</span>
+    <span class="c">/// this is a Shape</span>
+    | <span class="i">Shape</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>RecordDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A record field was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">GeoCoord</span> <span class="o">=</span> {
+    <span class="i">lat</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">float</span>
+    <span class="i">long</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="i">float</span>
+    }
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the record field definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">GeoCoord</span> <span class="o">=</span> {
+    <span class="c">/// this is latitude</span>
+    <span class="i">lat</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="i">float</span>
+    <span class="c">/// this is longitude</span>
+    <span class="i">long</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs2', 12)" onmouseover="showTip(event, 'fs2', 12)" class="i">float</span>
+    }
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>AutoPropertyDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A property was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">GeoCoord</span>() <span class="o">=</span>
+    <span class="k">member</span> <span class="k">val</span> <span class="i">Lat</span> <span class="o">=</span> <span class="n">0</span> <span class="k">with</span> <span class="i">get</span>, <span onmouseout="hideTip(event, 'fs3', 13)" onmouseover="showTip(event, 'fs3', 13)" class="i">set</span>
+    <span class="k">member</span> <span class="k">val</span> <span class="i">Long</span> <span class="o">=</span> <span class="n">0</span> <span class="k">with</span> <span class="i">get</span>, <span onmouseout="hideTip(event, 'fs3', 14)" onmouseover="showTip(event, 'fs3', 14)" class="i">set</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the property definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">type</span> <span class="i">GeoCoord</span>() <span class="o">=</span>
+    <span class="c">/// this is latitude</span>
+    <span class="k">member</span> <span class="k">val</span> <span class="i">Lat</span> <span class="o">=</span> <span class="n">0</span> <span class="k">with</span> <span class="i">get</span>, <span onmouseout="hideTip(event, 'fs3', 15)" onmouseover="showTip(event, 'fs3', 15)" class="i">set</span>
+    <span class="c">/// this is longitude</span>
+    <span class="k">member</span> <span class="k">val</span> <span class="i">Long</span> <span class="o">=</span> <span class="n">0</span> <span class="k">with</span> <span class="i">get</span>, <span onmouseout="hideTip(event, 'fs3', 16)" onmouseover="showTip(event, 'fs3', 16)" class="i">set</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h4>LetDefinitionHeader</h4>
+
+<h5>Cause</h5>
+
+<p>A let binding was defined and did not have a header XML documentation comment e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">let</span> <span class="i">add1</span> <span class="i">x</span> <span class="o">=</span> <span class="i">x</span> <span class="o">+</span> <span class="n">1</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<h5>How To Fix</h5>
+
+<p>Add XML header documentation to the let binding definition e.g.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">/// add 1 to a number</span>
+<span class="k">let</span> <span class="i">add1</span> <span class="i">x</span> <span class="o">=</span> <span class="i">x</span> <span class="o">+</span> <span class="n">1</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">Multiple items<br />val string : value:&#39;T -&gt; string<br /><br />Full name: Microsoft.FSharp.Core.Operators.string<br /><br />--------------------<br />type string = System.String<br /><br />Full name: Microsoft.FSharp.Core.string</div>
+<div class="tip" id="fs2">Multiple items<br />val float : value:&#39;T -&gt; float (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.float<br /><br />--------------------<br />type float = System.Double<br /><br />Full name: Microsoft.FSharp.Core.float<br /><br />--------------------<br />type float&lt;&#39;Measure&gt; = float<br /><br />Full name: Microsoft.FSharp.Core.float&lt;_&gt;</div>
+<div class="tip" id="fs3">val set : elements:seq&lt;&#39;T&gt; -&gt; Set&lt;&#39;T&gt; (requires comparison)<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.set</div>
+
+        </div>
+        <div class="span3">
+          <a href="index.html">
+            <img src="img/logo.png" alt="FSharpLint project logo." style="margin:10px 0px 0px 20px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">
+              FSharpLint
+            </li>
+
+            <li class="divider"></li>
+
+            <li><a href="http://github.com/fsprojects/FSharpLint">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsprojects/FSharpLint/tree/master/LICENSE">License (GPLv3)</a></li>
+            <li><a href="http://github.com/fsprojects/FSharpLint/tree/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="index.html">Introduction</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="Console-Application.html">Using the command line tool.</a></li>
+            <li><a href="MSBuild-Task.html">Using the MSBuild task.</a></li>
+            <li><a href="FAKE-Task.html">Using the FAKE task.</a></li>
+
+            <li class="nav-header">Analysers</li>
+
+            <li><a href="Hints.html">Hints</a></li>
+            <li><a href="NameConventions.html">NameConventions</a></li>
+            <li><a href="SourceLength.html">SourceLength</a></li>
+            <li><a href="Typography.html">Typography</a></li>
+            <li><a href="NestedStatements.html">NestedStatements</a></li>
+            <li><a href="NumberOfItems.html">NumberOfItems</a></li>
+            <li><a href="FunctionReimplementation.html">FunctionReimplementation</a></li>
+            <li><a href="XmlDocumentation.html">XmlDocumentation</a></li>
+            <li><a href="Binding.html">Binding</a></li>
+            <li><a href="CyclomaticComplexity.html">CyclomaticComplexity</a></li>
+            <li><a href="RaiseWithTooManyArguments.html">RaiseWithTooManyArguments</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/fsprojects/FSharpLint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
