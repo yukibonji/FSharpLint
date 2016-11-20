@@ -33,39 +33,28 @@
       <div class="row">
         <div class="span9" id="main">
           
-<h4>Using the Console Application</h4>
-
-<p>The console application is a very simple wrapper around the lint tool, with a required argument of <code>-f</code>, <code>-sf</code>, or <code>-source</code>. <code>-f</code> lints against an entire project, <code>-sf</code> can be used to lint a single file, and <code>-source</code> lints against a given string.</p>
-
-<p>If you get a <code>ParseException</code> reported when running the tool it's likely that your <code>FSharp.Core.dll</code> is in a non-standard directory - if this is not the case please report it as an issue. When it <em>is</em> in a non-standard directory you can use the <code>-core</code> argument to specify the directory where your <code>FSharp.Core.dll</code> is located.</p>
-
+<h4>Running the Console Application</h4>
+<p>The console application is a wrapper around the linter, with a required argument of: <code>-f</code>, <code>-sf</code>, or <code>-source</code>.</p>
+<ul>
+<li><code>-f</code> lints an entire project.</li>
+<li><code>-sf</code> lints a single file.</li>
+<li><code>-source</code> lints a string.</li>
+</ul>
 <h5>Example</h5>
-
 <p><code>C:\FSharpLint\bin</code> is the directory containing <code>fsharplint.exe</code></p>
-
 <p><code>C:\FSharpLint.FunctionalTest.TestedProject\FSharpLint.FunctionalTest.TestedProject.fsproj</code> is the path of the project file of the project that we want to lint.</p>
-
-<p>To run the tool we need to open the command line, <code>cd</code> into the directory containing <code>fsharplint.exe</code> and then run the tool using the <code>-f</code> argument to specify the project file:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<p>To run the linter, open the command line, <code>cd</code> into the directory containing <code>fsharplint.exe</code> and run the tool using the <code>-f</code> argument to specify the project file:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="o">&gt;</span><span class="i">cd</span> <span class="i">C</span><span class="o">:</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&gt;</span><span class="i">cd</span> <span class="i">C</span><span class="o">:</span>
 <span class="o">&gt;</span><span class="i">fsharplint</span> <span class="o">-</span><span class="i">f</span> <span class="s">&quot;C:\FSharpLint.FunctionalTest.TestedProject\FSharpLint.FunctionalTest.TestedProject.fsproj&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
-
 <h6>Output</h6>
-
 <p><img src="http://i.imgur.com/0DZTdDR.png" alt="Example run" title="Example run of the console application" /></p>
-
 <h4>Application Arguments</h4>
-
 <table>
 <thead>
 <tr class="header">
@@ -77,23 +66,18 @@
 <tbody>
 <tr class="odd">
 <td><p><code>-f</code></p></td>
-<td align="left"><p>Specifies the path to the project file of the project to be linted. <strong>(Required if -sf or source not specified)</strong></p></td>
+<td align="left"><p>Path to the project file.</p></td>
 <td><p><code>-f "C:\FSharpProjectDirectory\ProjectFile.fsproj"</code></p></td>
 </tr>
 <tr class="even">
 <td><p><code>-sf</code></p></td>
-<td align="left"><p>Specifies the path to a single source file to be linted. <strong>(Required if -f or -source not specified)</strong></p></td>
+<td align="left"><p>Path to a source file.</p></td>
 <td><p><code>-f "C:\FSharpProjectDirectory\Uploader.fsx"</code></p></td>
 </tr>
 <tr class="odd">
 <td><p><code>-source</code></p></td>
-<td align="left"><p>Lints a given string <strong>(Required if -f or -sf not specified)</strong></p></td>
+<td align="left"><p>String to be linted.</p></td>
 <td><p><code>-source "let x = fun _ -&gt; ()"</code></p></td>
-</tr>
-<tr class="even">
-<td><p><code>-core</code></p></td>
-<td align="left"><p>Specifies the path to the directory containing <code>FSharp.Core.dll</code> to be used to parse the project, this directory must contain <code>FSharp.Core.sigdata</code> and <code>FSharp.Core.optdata</code> alongside <code>FSharp.Core.dll</code> <strong>(Optional)</strong></p></td>
-<td><p><code>-core "C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0"</code></p></td>
 </tr>
 </tbody>
 </table>

@@ -33,81 +33,18 @@
       <div class="row">
         <div class="span9" id="main">
           
-<h4>Including The Task In Your Project's Project File</h4>
-
-<p>The task must be declared with the <code>UsingTask</code> element as follows:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="o">&lt;</span><span class="i">UsingTask</span> <span class="i">AssemblyFile</span><span class="o">=</span><span class="s">&quot;C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll&quot;</span> <span class="i">TaskName</span><span class="o">=</span><span class="s">&quot;FSharpLintTask&quot;</span> <span class="o">/&gt;</span>
-</pre>
-</td>
-</tr>
-</table>
-
-<p>The <code>AssemblyFile</code> property must be the path to the <code>FSharpLint.MSBuildIntegration.dll</code> assembly, this file should have been placed into the <code>/src/FSharpLint.MSBuildIntegration/bin/Release/</code> directory when building the tool.</p>
-
-<p>The task has a required property <code>Project</code> which must be a path to the project file, use <code>$(MSBuildProjectFullPath)</code> for this since it's a reference to the current file which is what we want:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
-</pre></td></tr></table>
-
-<p>The task has an optional property <code>TreatWarningsAsErrors</code> which will fail the build if there are any lint errors by displaying them as build errors:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="o">TreatWarningsAsErrors</span><span class="k">="true"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
-</pre></td></tr></table>
-
-<p>The task has another optional property <code>FSharpCoreDirectory</code> which allows you to specify the directory of where your <code>FSharp.Core.dll</code> is located. If you don't provide it the tool will attempt to find it from default locations - if it uses the wrong location you'll get a <code>ParseException</code> reported when running the tool:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> 
-        <span class="o">FSharpCoreDirectory</span><span class="k">="C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
-</pre></td></tr></table>
-
-<p>The following should be in your <code>.fsproj</code> file, with the <code>AssemblyFile</code> path ammended:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip" lang="xml"><span class="k">&lt;</span><span class="i">UsingTask</span> <span class="o">AssemblyFile</span><span class="k">="C:\FSharpLint\bin\FSharpLint.MSBuildIntegration.dll"</span> <span class="o">TaskName</span><span class="k">="FSharpLintTask"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="AfterBuild"</span><span class="k">&gt;</span>
-    <span class="k">&lt;</span><span class="i">FSharpLintTask</span> <span class="o">Project</span><span class="k">="$(MSBuildProjectFullPath)"</span> <span class="k">/&gt;</span>
-<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
-</pre></td></tr></table>
-
+<h4>Running the MSBuild Task</h4>
+<p>Install the <a href="https://www.nuget.org/packages/FSharpLint.MSBuild/">package via nuget</a>, the nuget package
+contains a targets file which runs the linter as an <code>AfterBuild</code> task. Once installed, building the project
+will run the linter.</p>
+<p>The following is what nuget will add to your project's <code>.fsproj</code> file:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="k">&lt;</span><span class="i">Import</span> <span class="o">Project</span><span class="k">="$(SolutionDir)\packages\FSharpLint.MSBuild\build\FSharpLint.MSBuild.targets"</span> <span class="k">/&gt;</span>
+</code></pre></td></tr></table>
+<p>The lint task provides a way to run the linter and get warnings in your IDE without having to install any plugins.
+It's not recommended to keep this as part of your regular build process, it will significantly slow down build times.</p>
 <h4>Example In Use</h4>
-
 <p><img src="http://i.imgur.com/D4c9g1m.png" alt="Example of MSBuild task in use" /></p>
 
 

@@ -35,85 +35,45 @@
         <div class="span9" id="main">
           
 <h1>Binding</h1>
-
 <p>Set of rules that analyse possible mistakes when binding values.</p>
-
 <h3>Analyser Settings</h3>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this analyser. (Default true)</p>
-
 <h3>Rules</h3>
-
 <h4>FavourIgnoreOverLetWild</h4>
-
 <h5>Cause</h5>
-
 <p>A value is binded to a wildcard e.g. <code>let _ = Console.ReadLine()</code></p>
-
 <h5>Rationale</h5>
-
 <p>Using the ignore function makes it clear what is intended to happen, rather than something that may be a mistake.</p>
-
 <h5>How To Fix</h5>
-
 <p>Pipe the value into the ignore function e.g. <code>Console.ReadLine() |&gt; ignore</code></p>
-
 <h5>Rule Settings</h5>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
-
 <h4>UselessBinding</h4>
-
 <h5>Cause</h5>
-
 <p>An identifier is binded to itself e.g. <code>let x = x</code></p>
-
 <h5>Rationale</h5>
-
 <p>Pointless statement likely to be an error.</p>
-
 <h5>How To Fix</h5>
-
 <p>Remove the binding.</p>
-
 <h5>Rule Settings</h5>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
-
 <h4>WildcardNamedWithAsPattern</h4>
-
 <h5>Cause</h5>
-
 <p>A wildcard is given a name using the as pattern e.g. <code>match something with | _ as x -&gt; x + y</code></p>
-
 <h5>Rationale</h5>
-
 <p>The wildcard and as pattern can be replaced with the identifier the value is to be bound to.</p>
-
 <h5>How To Fix</h5>
-
 <p>Replace the wildcard with the identifier the wildcard is currently being bound to, e.g. change <code>match something with | _ as x -&gt; x + y</code> to <code>match something with | x -&gt; x + y</code></p>
-
 <h5>Rule Settings</h5>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
-
 <h4>TupleOfWildcards</h4>
-
 <h5>Cause</h5>
-
 <p>A constructor in a pattern has arguments that consist entirely of wildcards e.g. <code>SynPat.Paren(_, _)</code></p>
-
 <h5>Rationale</h5>
-
 <p>The tuple of wildcards can be replaced with a single wildcard.</p>
-
 <h5>How To Fix</h5>
-
 <p>Replace the tuple with a single wildcard e.g. the example in the cause could be turned into <code>SynPat.Paren(_)</code></p>
-
 <h5>Rule Settings</h5>
-
 <p><code>Enabled</code> - A boolean property that can enable and disable this rule. (Default true)</p>
 
 
