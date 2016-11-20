@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Using the FAKE Task
+    <title>Running the FAKE Task
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A lint tool for F#.">
@@ -34,8 +34,10 @@
       <div class="row">
         <div class="span9" id="main">
           
-<h1>Using the FAKE Task</h1>
-<p>The <a href="http://fsharp.github.io/FAKE/">FAKE</a> task can be accessed by referencing <code>FSharpLint.FAKE.dll</code>, this dll is built to <code>src/FSharpLint.FAKE/bin/Release/FSharpLint.FAKE.dll</code> and also included in the <a href="https://www.nuget.org/packages/FSharpLint/">nuget package</a>.</p>
+<h1>Running the FAKE Task</h1>
+<p>Install the <a href="https://www.nuget.org/packages/FSharpLint.Fake/">package via nuget</a>, the nuget package
+contains <code>FSharpLint.Fake.dll</code> which provides an <code>FSharpLint</code> function in the namespace <code>FSharpLint.Fake</code> which
+when called will run the task.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function that can update the default options.</li>
@@ -49,9 +51,11 @@
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
+<span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">@&quot;packages/FSharpLint.0.1.12/FSharpLint.FAKE.dll&quot;</span>
-<span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">FAKE</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#I</span> <span class="s">@&quot;packages/tools/FSharpLint.Fake/tools&quot;</span>
+<span class="prep">#r</span> <span class="s">@&quot;packages/tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll&quot;</span>
+<span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">Fake</span>
 
 <span class="i">Target</span> <span class="s">&quot;Lint&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/**/*.fsproj&quot;</span>
@@ -65,9 +69,11 @@
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
+<span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">@&quot;packages/FSharpLint.0.1.12/FSharpLint.FAKE.dll&quot;</span>
-<span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">FAKE</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#I</span> <span class="s">@&quot;packages/tools/FSharpLint.Fake/tools&quot;</span>
+<span class="prep">#r</span> <span class="s">@&quot;packages/tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll&quot;</span>
+<span class="k">open</span> <span class="i">FSharpLint</span><span class="o">.</span><span class="i">Fake</span>
 
 <span class="i">Target</span> <span class="s">&quot;Lint&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
     <span class="i">FSharpLint</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">id</span> <span class="s">&quot;src/FSharpLint.Application/FSharpLint.Application.fsproj&quot;</span>)
@@ -82,10 +88,10 @@
 </code></pre></td>
 </tr>
 </table>
-<p>Use a function that updates the options record to change the default options (here we are setting a directory for FSharpLint to lookup <code>FSharp.Core.dll</code> from):</p>
+<p>For custom options, use a function that updates the options:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FSharpLint</span> (<span class="k">fun</span> <span class="i">options</span> <span class="k">-&gt;</span> { <span class="i">options</span> <span class="k">with</span> <span class="i">FSharpCoreDirectory</span> <span class="o">=</span> <span class="s">&quot;/somedirectory&quot;</span> }) <span class="i">projectFile</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FSharpLint</span> (<span class="k">fun</span> <span class="i">options</span> <span class="k">-&gt;</span> { <span class="i">options</span> <span class="k">with</span> <span class="i">FailBuildIfAnyWarnings</span> <span class="o">=</span> <span class="k">true</span> }) <span class="i">projectFile</span>
 </code></pre></td>
 </tr>
 </table>
