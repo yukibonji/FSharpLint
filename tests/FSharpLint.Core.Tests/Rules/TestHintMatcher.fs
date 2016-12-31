@@ -890,3 +890,74 @@ let x y =
  
         this.Parse(source, generateHintConfig ["List.map f (List.map g x) ===> List.map (g >> f) x"])
         Assert.AreEqual(expected, this.ApplyQuickFix source)
+
+    [<Test>]
+    member this.``Piped function application replacing function call with pipes either side keeps formatting of pipes either side.``() = 
+        let source = """
+module Program
+
+let x y =
+    y
+    |> List.filter (fun x -> true)
+    |> List.map id
+    |> List.map id
+    |> List.filter (fun x -> true)
+"""
+ 
+        let expected = """
+module Program
+
+let x y =
+    y
+    |> List.filter (fun x -> true)
+    |> List.map (id >> id)
+    |> List.filter (fun x -> true)
+"""
+ 
+        this.Parse(source, generateHintConfig ["List.map f (List.map g x) ===> List.map (g >> f) x"])
+        Assert.AreEqual(expected, this.ApplyQuickFix source)
+
+    [<Test>]
+    member this.``Piped function application across multiple lines keeps indendation of second line.``() = 
+        let source = """
+module Program
+
+let x y =
+    y
+        |> List.filter (fun x -> true)
+        |> List.map id
+        |> List.map id
+        |> List.filter (fun x -> true)
+"""
+ 
+        let expected = """
+module Program
+
+let x y =
+    y
+        |> List.filter (fun x -> true)
+        |> List.map (id >> id)
+        |> List.filter (fun x -> true)
+"""
+ 
+        this.Parse(source, generateHintConfig ["List.map f (List.map g x) ===> List.map (g >> f) x"])
+        Assert.AreEqual(expected, this.ApplyQuickFix source)
+
+    [<Test>]
+    member this.``Piped function application across single line is replaced with expression that stays on a single line.``() = 
+        let source = """
+module Program
+
+let x y =
+    y |> List.map id |> List.map id
+"""
+ 
+        let expected = """
+module Program
+
+let x y =
+    y |> List.map (id >> id)
+"""
+ 
+        this.Parse(source, generateHintConfig ["List.map f (List.map g x) ===> List.map (g >> f) x"])
+        Assert.AreEqual(expected, this.ApplyQuickFix source)
