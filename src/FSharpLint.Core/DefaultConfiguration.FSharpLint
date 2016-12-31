@@ -81,6 +81,7 @@
           if a then true else false ===> a
           if a then false else true ===> not a
           not (not x) ===> x
+          - -x ===> x
 
           (fst x, snd x) ===> x
 
