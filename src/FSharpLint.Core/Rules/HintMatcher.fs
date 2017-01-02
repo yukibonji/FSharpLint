@@ -504,6 +504,7 @@ module HintMatcher =
                 ""
 
         let rec toString replace parentAstNode (visitorInfo:VisitorInfo) (matchedVariables:Dictionary<_, _>) parentHintNode hintNode =
+            let fart = toString replace
             let toString = toString replace parentAstNode visitorInfo matchedVariables (Some hintNode)
 
             let str = 
@@ -528,7 +529,28 @@ module HintMatcher =
                     |> List.map DemangleOperatorName
                     |> String.concat "."
                 | HintExpr(Expression.FunctionApplication(expressions)) ->
-                    expressions |> surroundExpressionsString (HintExpr >> toString) "" "" " "
+                    if replace then
+                        let rec removeParens = function 
+                        | Expression.Parentheses(expr) -> removeParens expr 
+                        | expr -> expr
+
+                        let appliedValues = List.rev expressions
+                        match List.tryHead appliedValues with
+                        | Some(expr) -> 
+                            let expr = 
+                                HintExpr(removeParens expr) 
+                                |> (fart None visitorInfo matchedVariables None)
+
+                            let appStr =
+                                List.tail appliedValues
+                                |> List.rev
+                                |> surroundExpressionsString (HintExpr >> toString) "" "" " "
+
+                            expr + "\n    |> " + appStr
+                        | _ -> 
+                            expressions |> surroundExpressionsString (HintExpr >> toString) "" "" " "
+                    else
+                        expressions |> surroundExpressionsString (HintExpr >> toString) "" "" " "
                 | HintExpr(Expression.InfixOperator(operator, leftHint, rightHint)) ->
                     toString (HintExpr leftHint) + " " + opToString operator + " " + toString (HintExpr rightHint)
                 | HintPat(Pattern.Cons(leftHint, rightHint)) ->

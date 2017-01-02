@@ -915,7 +915,8 @@ let x y =
 """
  
         this.Parse(source, generateHintConfig ["List.map f (List.map g x) ===> List.map (g >> f) x"])
-        Assert.AreEqual(expected, this.ApplyQuickFix source)
+        let foo = this.ApplyQuickFix source
+        Assert.AreEqual(expected, foo)
 
     [<Test>]
     member this.``Piped function application across multiple lines keeps indendation of second line.``() = 
